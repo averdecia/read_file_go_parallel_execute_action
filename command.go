@@ -24,12 +24,12 @@ type ICommand interface {
 	ExecuteAction(element []string) (string, error)
 }
 
-func waitToFinish(outputPointer *csv.Writer, outputFile *os.File) {
+func waitToFinish(outputPointer *csv.Writer, outputFile *os.File, seconds int) {
 
 	var wg sync.WaitGroup
 	wg.Add(1)
 
-	ticker := time.NewTicker(15 * time.Second)
+	ticker := time.NewTicker(time.Duration(seconds) * time.Second)
 	quit := make(chan struct{})
 	go func() {
 		defer wg.Done()
@@ -146,11 +146,11 @@ func getOutputWriter(outputPath string) (*csv.Writer, *os.File) {
 }
 
 // RunProcess is the function to trigger the full process
-func RunProcess(command ICommand, routines int, inFile string, outFile string) {
+func RunProcess(command ICommand, routines int, inFile string, outFile string, secondsToFinish int) {
 
 	outputPointer, outputFile := getOutputWriter(outFile)
 	createRoutines(command, routines, outputPointer)
 	readFile(inFile, ",", elements)
 
-	waitToFinish(outputPointer, outputFile)
+	waitToFinish(outputPointer, outputFile, secondsToFinish)
 }
