@@ -122,14 +122,14 @@ func executeAction(command ICommand, element []string, outputPointer *csv.Writer
 	res, err := command.ExecuteAction(element)
 
 	if err != nil {
-		fmt.Printf("Server error: %v", err)
+		fmt.Printf("Server error: %v \n", err)
 		failedUsersCount++
 		element = append(element, err.Error())
 		outputPointer.Write(element)
 		outputPointer.Flush()
 		return
 	}
-	fmt.Printf("Response: %v", res)
+	fmt.Printf("Response: %v \n", res)
 	successUsersCount++
 }
 
