@@ -1,4 +1,4 @@
-# script_command
+# Read a file and execute an abstract action with multiple go routines
 The commands will read files and execute some actions with it. The command will handle the opening files, saving error, report progress and velocity, closing cursor
 
 To use the lib you should create a class that implement the ICommand interface.
